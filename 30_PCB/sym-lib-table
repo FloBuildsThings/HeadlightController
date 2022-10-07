@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "Scheinwerfer_Dirk-eagle-import")(type "Legacy")(uri "${KIPRJMOD}/Scheinwerfer_Dirk-eagle-import.lib")(options "")(descr ""))
+  (lib (name "Scheinwerfer_Dirk-rescue")(type "Legacy")(uri "${KIPRJMOD}/Scheinwerfer_Dirk-rescue.lib")(options "")(descr ""))
+)

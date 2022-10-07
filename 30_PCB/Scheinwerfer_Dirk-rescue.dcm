@@ -1,0 +1,7 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP ATMEGA328P-PU-SamacSys_Parts
+F https://datasheet.datasheetarchive.com/originals/distributors/Datasheets_SAMA/59a954cf62ab8fb92f29cdfb51cb433a.pdf
+$ENDCMP
+#
+#End Doc Library

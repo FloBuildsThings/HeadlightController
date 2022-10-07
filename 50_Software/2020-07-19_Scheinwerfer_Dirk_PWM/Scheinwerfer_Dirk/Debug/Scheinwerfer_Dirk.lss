@@ -1,0 +1,377 @@
+
+Scheinwerfer_Dirk.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  0000024c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001f8  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  0000024c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000027c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  000002bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000007a9  00000000  00000000  000002e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006ad  00000000  00000000  00000a8d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003d5  00000000  00000000  0000113a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  00001510  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000400  00000000  00000000  00001544  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000018  00000000  00000000  00001944  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 40 00 	call	0x80	; 0x80 <main>
+  78:	0c 94 fa 00 	jmp	0x1f4	; 0x1f4 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <main>:
+	uint8_t PotiR = 0b00000000;
+	uint8_t PotiG = 0b00000000;
+	uint8_t PotiB = 0b00000000;
+	
+	//DDR
+	DDRB |= (1<<DDB1);
+  80:	21 9a       	sbi	0x04, 1	; 4
+	DDRB |= (1<<DDB2);
+  82:	22 9a       	sbi	0x04, 2	; 4
+	
+	DDRD |= (1<<DDD3);
+  84:	53 9a       	sbi	0x0a, 3	; 10
+	
+	//init_Counter1_PWM
+	//PWM
+	//TCCR1A
+	TCCR1A |= (1<<COM1A1);
+  86:	e0 e8       	ldi	r30, 0x80	; 128
+  88:	f0 e0       	ldi	r31, 0x00	; 0
+  8a:	80 81       	ld	r24, Z
+  8c:	80 68       	ori	r24, 0x80	; 128
+  8e:	80 83       	st	Z, r24
+	TCCR1A &= ~ (1<<COM1A0);
+  90:	80 81       	ld	r24, Z
+  92:	8f 7b       	andi	r24, 0xBF	; 191
+  94:	80 83       	st	Z, r24
+	TCCR1A |= (1<<COM1B1);
+  96:	80 81       	ld	r24, Z
+  98:	80 62       	ori	r24, 0x20	; 32
+  9a:	80 83       	st	Z, r24
+	TCCR1A &= ~ (1<<COM1B0);
+  9c:	80 81       	ld	r24, Z
+  9e:	8f 7e       	andi	r24, 0xEF	; 239
+  a0:	80 83       	st	Z, r24
+	TCCR1A |= (1<<WGM10);
+  a2:	80 81       	ld	r24, Z
+  a4:	81 60       	ori	r24, 0x01	; 1
+  a6:	80 83       	st	Z, r24
+	TCCR1A &= ~ (1<<WGM11);
+  a8:	80 81       	ld	r24, Z
+  aa:	8d 7f       	andi	r24, 0xFD	; 253
+  ac:	80 83       	st	Z, r24
+
+	//TCCR1B
+	TCCR1B &= ~ (1<<ICNC1);
+  ae:	e1 e8       	ldi	r30, 0x81	; 129
+  b0:	f0 e0       	ldi	r31, 0x00	; 0
+  b2:	80 81       	ld	r24, Z
+  b4:	8f 77       	andi	r24, 0x7F	; 127
+  b6:	80 83       	st	Z, r24
+	TCCR1B &= ~ (1<<ICES1);
+  b8:	80 81       	ld	r24, Z
+  ba:	8f 7b       	andi	r24, 0xBF	; 191
+  bc:	80 83       	st	Z, r24
+	TCCR1B &= ~ (1<<WGM13);
+  be:	80 81       	ld	r24, Z
+  c0:	8f 7e       	andi	r24, 0xEF	; 239
+  c2:	80 83       	st	Z, r24
+	TCCR1B |= (1<<WGM12);
+  c4:	80 81       	ld	r24, Z
+  c6:	88 60       	ori	r24, 0x08	; 8
+  c8:	80 83       	st	Z, r24
+	TCCR1B &= ~ (1<<CS12);
+  ca:	80 81       	ld	r24, Z
+  cc:	8b 7f       	andi	r24, 0xFB	; 251
+  ce:	80 83       	st	Z, r24
+	TCCR1B &= ~ (1<<CS11);
+  d0:	80 81       	ld	r24, Z
+  d2:	8d 7f       	andi	r24, 0xFD	; 253
+  d4:	80 83       	st	Z, r24
+	TCCR1B |= (1<<CS10);
+  d6:	80 81       	ld	r24, Z
+  d8:	81 60       	ori	r24, 0x01	; 1
+  da:	80 83       	st	Z, r24
+		
+	//TCCR1C
+	TCCR1C &= ~ (1<<FOC1A);
+  dc:	e2 e8       	ldi	r30, 0x82	; 130
+  de:	f0 e0       	ldi	r31, 0x00	; 0
+  e0:	80 81       	ld	r24, Z
+  e2:	8f 77       	andi	r24, 0x7F	; 127
+  e4:	80 83       	st	Z, r24
+	TCCR1C &= ~ (1<<FOC1B);
+  e6:	80 81       	ld	r24, Z
+  e8:	8f 7b       	andi	r24, 0xBF	; 191
+  ea:	80 83       	st	Z, r24
+		
+	//TIMSK1
+	TIMSK1 &= ~ (1<<ICIE1); //
+  ec:	ef e6       	ldi	r30, 0x6F	; 111
+  ee:	f0 e0       	ldi	r31, 0x00	; 0
+  f0:	80 81       	ld	r24, Z
+  f2:	8f 7d       	andi	r24, 0xDF	; 223
+  f4:	80 83       	st	Z, r24
+	TIMSK1 &= ~ (1<<OCIE1B); //B Match Interrupt
+  f6:	80 81       	ld	r24, Z
+  f8:	8b 7f       	andi	r24, 0xFB	; 251
+  fa:	80 83       	st	Z, r24
+	TIMSK1 &= ~ (1<<OCIE1A); //A Match Interrupt
+  fc:	80 81       	ld	r24, Z
+  fe:	8d 7f       	andi	r24, 0xFD	; 253
+ 100:	80 83       	st	Z, r24
+	TIMSK1 &= ~ (1<<TOIE1);  //Overflow Interrupt
+ 102:	80 81       	ld	r24, Z
+ 104:	8e 7f       	andi	r24, 0xFE	; 254
+ 106:	80 83       	st	Z, r24
+
+	//TIFR0
+	//Interrupt Flags for TIMSK1 enabled Bits
+
+	//Counter
+	TCNT1 = 0x00;
+ 108:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7f8085>
+ 10c:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7f8084>
+
+	//OutputCompareRegister (PWM Rate)
+	OCR1A = 0b11110000; //PB1 R
+ 110:	80 ef       	ldi	r24, 0xF0	; 240
+ 112:	90 e0       	ldi	r25, 0x00	; 0
+ 114:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7f8089>
+ 118:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7f8088>
+	OCR1B = 0b11111111; //PB2 G
+ 11c:	8f ef       	ldi	r24, 0xFF	; 255
+ 11e:	90 e0       	ldi	r25, 0x00	; 0
+ 120:	90 93 8b 00 	sts	0x008B, r25	; 0x80008b <__TEXT_REGION_LENGTH__+0x7f808b>
+ 124:	80 93 8a 00 	sts	0x008A, r24	; 0x80008a <__TEXT_REGION_LENGTH__+0x7f808a>
+	
+	
+	//PWM
+	//TCCR2A
+	TCCR2A &= ~ (1<<COM2A1);
+ 128:	e0 eb       	ldi	r30, 0xB0	; 176
+ 12a:	f0 e0       	ldi	r31, 0x00	; 0
+ 12c:	80 81       	ld	r24, Z
+ 12e:	8f 77       	andi	r24, 0x7F	; 127
+ 130:	80 83       	st	Z, r24
+	TCCR2A &= ~ (1<<COM2A0);
+ 132:	80 81       	ld	r24, Z
+ 134:	8f 7b       	andi	r24, 0xBF	; 191
+ 136:	80 83       	st	Z, r24
+	TCCR2A |= (1<<COM2B1);
+ 138:	80 81       	ld	r24, Z
+ 13a:	80 62       	ori	r24, 0x20	; 32
+ 13c:	80 83       	st	Z, r24
+	TCCR2A &= ~ (1<<COM2B0);
+ 13e:	80 81       	ld	r24, Z
+ 140:	8f 7e       	andi	r24, 0xEF	; 239
+ 142:	80 83       	st	Z, r24
+	TCCR2A |= (1<<WGM20);
+ 144:	80 81       	ld	r24, Z
+ 146:	81 60       	ori	r24, 0x01	; 1
+ 148:	80 83       	st	Z, r24
+	TCCR2A |= (1<<WGM21);
+ 14a:	80 81       	ld	r24, Z
+ 14c:	82 60       	ori	r24, 0x02	; 2
+ 14e:	80 83       	st	Z, r24
+
+	//TCCR2B
+	TCCR2B &= ~ (1<<FOC2A);
+ 150:	e1 eb       	ldi	r30, 0xB1	; 177
+ 152:	f0 e0       	ldi	r31, 0x00	; 0
+ 154:	80 81       	ld	r24, Z
+ 156:	8f 77       	andi	r24, 0x7F	; 127
+ 158:	80 83       	st	Z, r24
+	TCCR2B &= ~ (1<<FOC2B);
+ 15a:	80 81       	ld	r24, Z
+ 15c:	8f 7b       	andi	r24, 0xBF	; 191
+ 15e:	80 83       	st	Z, r24
+	TCCR2B &= ~ (1<<WGM22);
+ 160:	80 81       	ld	r24, Z
+ 162:	87 7f       	andi	r24, 0xF7	; 247
+ 164:	80 83       	st	Z, r24
+	TCCR2B &= ~ (1<<CS22);  //011 = 32
+ 166:	80 81       	ld	r24, Z
+ 168:	8b 7f       	andi	r24, 0xFB	; 251
+ 16a:	80 83       	st	Z, r24
+	TCCR2B &= ~ (1<<CS21); //100 = 64
+ 16c:	80 81       	ld	r24, Z
+ 16e:	8d 7f       	andi	r24, 0xFD	; 253
+ 170:	80 83       	st	Z, r24
+	TCCR2B |= (1<<CS20); //001 = 1
+ 172:	80 81       	ld	r24, Z
+ 174:	81 60       	ori	r24, 0x01	; 1
+ 176:	80 83       	st	Z, r24
+
+	//TIMSK2
+	TIMSK2 &= ~ (1<<OCIE2B); //B Match Interrupt
+ 178:	e0 e7       	ldi	r30, 0x70	; 112
+ 17a:	f0 e0       	ldi	r31, 0x00	; 0
+ 17c:	80 81       	ld	r24, Z
+ 17e:	8b 7f       	andi	r24, 0xFB	; 251
+ 180:	80 83       	st	Z, r24
+	TIMSK2 &= ~ (1<<OCIE2A); //A Match Interrupt
+ 182:	80 81       	ld	r24, Z
+ 184:	8d 7f       	andi	r24, 0xFD	; 253
+ 186:	80 83       	st	Z, r24
+	TIMSK2 &= ~ (1<<TOIE2);  //Overflow Interrupt
+ 188:	80 81       	ld	r24, Z
+ 18a:	8e 7f       	andi	r24, 0xFE	; 254
+ 18c:	80 83       	st	Z, r24
+
+	//TIFR0
+	//Interrupt Flags for TIMSK2 enabled Bits
+
+	//Counter
+	TCNT2 = 0x00;
+ 18e:	10 92 b2 00 	sts	0x00B2, r1	; 0x8000b2 <__TEXT_REGION_LENGTH__+0x7f80b2>
+
+	//OutputCompareRegister (PWM Rate)
+	OCR2A = 0x00; //PB3
+ 192:	10 92 b3 00 	sts	0x00B3, r1	; 0x8000b3 <__TEXT_REGION_LENGTH__+0x7f80b3>
+	OCR2B = 0x00; //PD3
+ 196:	e4 eb       	ldi	r30, 0xB4	; 180
+ 198:	f0 e0       	ldi	r31, 0x00	; 0
+ 19a:	10 82       	st	Z, r1
+	
+	
+	OCR2B = 0b00000000; //PD3 B
+ 19c:	10 82       	st	Z, r1
+	
+	while(1)
+	{
+			if(OCR1A>= 0b11111111)
+ 19e:	e8 e8       	ldi	r30, 0x88	; 136
+ 1a0:	f0 e0       	ldi	r31, 0x00	; 0
+			{
+				OCR1A=0;
+				OCR1B=0b11111111;	
+ 1a2:	ca e8       	ldi	r28, 0x8A	; 138
+ 1a4:	d0 e0       	ldi	r29, 0x00	; 0
+ 1a6:	2f ef       	ldi	r18, 0xFF	; 255
+ 1a8:	30 e0       	ldi	r19, 0x00	; 0
+			OCR1A++;
+			OCR1B--;
+			
+			if(OCR1A>= 0b10000000)
+			{
+				OCR2B=0;
+ 1aa:	a4 eb       	ldi	r26, 0xB4	; 180
+ 1ac:	b0 e0       	ldi	r27, 0x00	; 0
+	
+	OCR2B = 0b00000000; //PD3 B
+	
+	while(1)
+	{
+			if(OCR1A>= 0b11111111)
+ 1ae:	80 81       	ld	r24, Z
+ 1b0:	91 81       	ldd	r25, Z+1	; 0x01
+ 1b2:	8f 3f       	cpi	r24, 0xFF	; 255
+ 1b4:	91 05       	cpc	r25, r1
+ 1b6:	20 f0       	brcs	.+8      	; 0x1c0 <main+0x140>
+			{
+				OCR1A=0;
+ 1b8:	11 82       	std	Z+1, r1	; 0x01
+ 1ba:	10 82       	st	Z, r1
+				OCR1B=0b11111111;	
+ 1bc:	39 83       	std	Y+1, r19	; 0x01
+ 1be:	28 83       	st	Y, r18
+			}
+			OCR1A++;
+ 1c0:	80 81       	ld	r24, Z
+ 1c2:	91 81       	ldd	r25, Z+1	; 0x01
+ 1c4:	01 96       	adiw	r24, 0x01	; 1
+ 1c6:	91 83       	std	Z+1, r25	; 0x01
+ 1c8:	80 83       	st	Z, r24
+			OCR1B--;
+ 1ca:	88 81       	ld	r24, Y
+ 1cc:	99 81       	ldd	r25, Y+1	; 0x01
+ 1ce:	01 97       	sbiw	r24, 0x01	; 1
+ 1d0:	99 83       	std	Y+1, r25	; 0x01
+ 1d2:	88 83       	st	Y, r24
+			
+			if(OCR1A>= 0b10000000)
+ 1d4:	80 81       	ld	r24, Z
+ 1d6:	91 81       	ldd	r25, Z+1	; 0x01
+ 1d8:	80 38       	cpi	r24, 0x80	; 128
+ 1da:	91 05       	cpc	r25, r1
+ 1dc:	08 f0       	brcs	.+2      	; 0x1e0 <main+0x160>
+			{
+				OCR2B=0;
+ 1de:	1c 92       	st	X, r1
+			}
+			OCR2B++;
+ 1e0:	8c 91       	ld	r24, X
+ 1e2:	8f 5f       	subi	r24, 0xFF	; 255
+ 1e4:	8c 93       	st	X, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 1e6:	87 e8       	ldi	r24, 0x87	; 135
+ 1e8:	93 e1       	ldi	r25, 0x13	; 19
+ 1ea:	01 97       	sbiw	r24, 0x01	; 1
+ 1ec:	f1 f7       	brne	.-4      	; 0x1ea <main+0x16a>
+ 1ee:	00 c0       	rjmp	.+0      	; 0x1f0 <main+0x170>
+ 1f0:	00 00       	nop
+ 1f2:	dd cf       	rjmp	.-70     	; 0x1ae <main+0x12e>
+
+000001f4 <_exit>:
+ 1f4:	f8 94       	cli
+
+000001f6 <__stop_program>:
+ 1f6:	ff cf       	rjmp	.-2      	; 0x1f6 <__stop_program>
